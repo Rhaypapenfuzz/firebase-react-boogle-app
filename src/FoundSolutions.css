@@ -1,0 +1,12 @@
+.Found-solutions-list {
+  text-align: center;
+}
+
+.Found-solutions-list ul {
+  list-style-type: none;
+}
+
+.Found-solutions-list li {
+  font-size: 14pt;
+  line-height: 20pt;
+}

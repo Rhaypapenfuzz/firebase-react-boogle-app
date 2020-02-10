@@ -1,0 +1,9 @@
+.Board-div {
+  width: 300px;
+  margin: auto;
+}
+
+.Tile {
+  text-align: center;
+  line-height: 30pt;
+}
