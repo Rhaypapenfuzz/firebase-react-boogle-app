@@ -12,12 +12,12 @@ import {RandomGrid} from './random_grid.js';
 import TextInput from './TextInput.js';
 import {ChallengeGrids} from './challengeGrids.js';
 import {HighestScores} from './HighestScores.js';
-import UploadImages from './UploadImages.js';
+//import UploadImages from './UploadImages.js';
 
 function App() {
   var allChallengeGrids =  ChallengeGrids();
   var allHighestScores =  HighestScores();
-  UploadImages();
+  //UploadImages();
   const [gameState, setGameState] = useState(GAME_STATE.BEFORE);
   const [challengeGame, setChallengeGame] = useState(CHALLENGE_GAMES.GAME_1);
   const [grid, setGrid] = useState([]);
