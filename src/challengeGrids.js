@@ -1,18 +1,6 @@
+import React from 'react';
 import firebase from 'firebase';
-//import * as firebase from 'firebase';
 import 'firebase/firestore'
-
-
-firebase.initializeApp({
-  apiKey: "AIzaSyBWfecxjaQYVaVQTkdg3XbvQuRB-usgukI",
-  authDomain: "ray-boogle.firebaseapp.com",
-  databaseURL: "https://ray-boogle.firebaseio.com",
-  projectId: "ray-boogle",
-  storageBucket: "ray-boogle.appspot.com",
-  messagingSenderId: "735876215973",
-  appId: "1:735876215973:web:829d248c7605211951c94c"
-});
-
 
 
 var allCharsMap = {}; //map containing challenge Grids

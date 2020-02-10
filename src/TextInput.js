@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import firebase from 'firebase';
 
+/*
+When using in App.js
+<TextInput promptText="Name?" field="name" user={user} />
+<TextInput promptText="Hometown?" field="hometown" user={user} />
+*/
 function TextInput({promptText, user, field}) {
 
   const [text, setText] = useState("");

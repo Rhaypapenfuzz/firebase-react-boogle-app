@@ -1,10 +1,11 @@
 import React from 'react';
 import firebase from 'firebase';
- 
+import Button from "@material-ui/core/Button";
+
 function LoginButton({setUser}) {
- 
+
   function logIn() {
-    var provider = new firebase.auth.GoogleAuthProvider(); 
+    var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider).then(function(result) {
       console.log(result.user);
       setUser(result.user);
@@ -14,9 +15,9 @@ function LoginButton({setUser}) {
   }
 
   return (
-    <button onClick={() => logIn()}>
+    <Button onClick={() => logIn()}>
       Login
-    </button>);
+    </Button>);
   }
 
 export default LoginButton;

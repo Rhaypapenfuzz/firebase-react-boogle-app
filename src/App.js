@@ -9,21 +9,21 @@ import './App.css';
 import {GAME_STATE} from './game_state_enum.js';
 import {CHALLENGE_GAMES} from './challenge_games_enum.js';
 import {RandomGrid} from './random_grid.js';
-import LoginButton from './LoginButton.js';
 import TextInput from './TextInput.js';
 import {ChallengeGrids} from './challengeGrids.js';
-
+import {HighestScores} from './HighestScores.js';
+import UploadImages from './UploadImages.js';
 
 function App() {
   var allChallengeGrids =  ChallengeGrids();
-
+  var allHighestScores =  HighestScores();
+  UploadImages();
   const [gameState, setGameState] = useState(GAME_STATE.BEFORE);
   const [challengeGame, setChallengeGame] = useState(CHALLENGE_GAMES.GAME_1);
   const [grid, setGrid] = useState([]);
   const [allSolutions, setAllSolutions] = useState([]);
   const [foundSolutions, setFoundSolutions] = useState([]);
-
-  const [user, setUser] = useState(null);
+  const [highestScoreText, setHighestScoreText] = useState("");
 
   // useEffect will trigger when the array items in the second argument are
   // updated so whenever grid is updated, we will recompute the solutions
@@ -43,18 +43,19 @@ function App() {
       setFoundSolutions([]);
     }
     else if (gameState === GAME_STATE.CHALLENGE_MODE) {
-      console.log(challengeGame);
       if(challengeGame === CHALLENGE_GAMES.GAME_1){
         setGrid(allChallengeGrids[0]);
+        setHighestScoreText(allHighestScores[0]);
+        console.log(highestScoreText);
       }
       else if(challengeGame === CHALLENGE_GAMES.GAME_2){
         setGrid(allChallengeGrids[1]);
+        setHighestScoreText(allHighestScores[1]);
       }
       else if(challengeGame === CHALLENGE_GAMES.GAME_3){
         setGrid(allChallengeGrids[2]);
+        setHighestScoreText(allHighestScores[2]);
       }
-      //setGrid(allChallengeGrids[0]);
-      //console.log(ChallengeGrids())
       setFoundSolutions([]);
     }
   }, [gameState, challengeGame]);
@@ -66,14 +67,6 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <LoginButton setUser={(user) => setUser(user)} />
-        {user != null &&
-	         <p>Welcome, {user.displayName} ({user.email})</p>
-        }
-      </header>
-      <TextInput promptText="Name?" field="name" user={user} />
-      <TextInput promptText="Hometown?" field="hometown" user={user} />
       <ToggleGameState gameState={gameState}
                        setGameState={(state) => setGameState(state)}
                        challengeGame={challengeGame}
@@ -91,6 +84,7 @@ function App() {
       { gameState === GAME_STATE.CHALLENGE_MODE &&
         <div>
           <Board board={grid} />
+          <p> High Score: {highestScoreText}</p>
           <GuessInput allSolutions={allSolutions}
                       foundSolutions={foundSolutions}
                       correctAnswerCallback={(answer) => correctAnswerFound(answer)}/>

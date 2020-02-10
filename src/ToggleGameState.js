@@ -1,26 +1,17 @@
 import React, {useState} from 'react';
 import Button from "@material-ui/core/Button";
+import LoginButton from './LoginButton.js';
 import {GAME_STATE} from './game_state_enum.js';
 import {CHALLENGE_GAMES} from './challenge_games_enum.js';
 import './ToggleGameState.css';
-//import DropdownMenu from "./challengesDropdownMenu.js";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 
-/*
-<Button onClick={() => updateGameState(true, CHALLENGE_GAMES.GAME_2)} >
-  {challengeButtonText}
-</Button>
-*/
-/*
-<MenuItem onClick={handleClose}>Challenge 2</MenuItem>
-*/
-
 export default function ToggleGameState({gameState, setGameState, challengeGame, setChallengeGame}) {
 
   const [buttonText, setButtonText] = useState("Start a new game!");
-  const [challengeButtonText, setChallengeButtonText] = useState("Load Challenges!");
+  const [user, setUser] = useState(null);
 
   function updateGameState(challengeMode, challengeGame) {
 
@@ -88,6 +79,10 @@ export default function ToggleGameState({gameState, setGameState, challengeGame,
 
   return (
     <div className="Toggle-game-state">
+      <LoginButton setUser={(user) => setUser(user)} />
+      {user != null &&
+        <p>Welcome, {user.displayName} ({user.email})</p>
+      }
       <Button onClick={() => updateGameState(false)} >
         {buttonText}
       </Button>
