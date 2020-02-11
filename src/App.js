@@ -29,6 +29,11 @@ function App() {
   const [highestScoreText, setHighestScoreText] = useState(0);
   const [multiPlayer, setMultiPlayer] = useState(MULTIPLAYER.OFF);
 
+  const db = firebase.firestore();
+  // Get a new write batch
+  var batch = db.batch();
+  // Updates the highest Score of challenge
+  var docRef = db.collection("challengeGrids").doc("highestScores");
   // useEffect will trigger when the array items in the second argument are
   // updated so whenever grid is updated, we will recompute the solutions
   useEffect(() => {
@@ -41,6 +46,7 @@ function App() {
   // This will run when gameState changes.
   // When a new game is started, generate a new random grid and reset solutions
   useEffect(() => {
+
     console.log(gameState);
     if (gameState === GAME_STATE.IN_PROGRESS) {
       setGrid(RandomGrid());
@@ -50,18 +56,40 @@ function App() {
       if(challengeGame === CHALLENGE_GAMES.GAME_1){
         setGrid(allChallengeGrids[0]);
         setHighestScoreText(allHighestScores[0]);
-        console.log(highestScoreText);
+        if(foundSolutions.length > allHighestScores[0]){
+          batch.update(docRef, {"highestScore1": foundSolutions.length});
+          // Commits the batch
+          batch.commit().then(function () {
+            // ...
+          });
+
+        }
       }
       else if(challengeGame === CHALLENGE_GAMES.GAME_2){
         setGrid(allChallengeGrids[1]);
         setHighestScoreText(allHighestScores[1]);
+        if(foundSolutions.length > allHighestScores[1]){
+          batch.update(docRef, {"highestScore2": foundSolutions.length});
+          // Commits the batch
+          batch.commit().then(function () {
+            // ...
+          });
+        }
       }
       else if(challengeGame === CHALLENGE_GAMES.GAME_3){
         setGrid(allChallengeGrids[2]);
         setHighestScoreText(allHighestScores[2]);
+        if(foundSolutions.length > allHighestScores[2]){
+          batch.update(docRef, {"highestScore3": foundSolutions.length});
+          // Commits the batch
+          batch.commit().then(function () {
+            // ...
+          });
+        }
       }
       setFoundSolutions([]);
     }
+
   }, [gameState, challengeGame]);
 
   function correctAnswerFound(answer) {
