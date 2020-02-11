@@ -3,14 +3,17 @@ import Button from "@material-ui/core/Button";
 import LoginButton from './LoginButton.js';
 import {GAME_STATE} from './game_state_enum.js';
 import {CHALLENGE_GAMES} from './challenge_games_enum.js';
+import {MULTIPLAYER} from './multiPlayer_enum.js';
 import './ToggleGameState.css';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 
-export default function ToggleGameState({gameState, setGameState, challengeGame, setChallengeGame}) {
+export default function ToggleGameState({gameState, setGameState, challengeGame, setChallengeGame, multiPlayer, setMultiPlayer}) {
 
   const [buttonText, setButtonText] = useState("Start a new game!");
+  const [multiPlayerText, setMultiPlayerText] = useState("Turn Multiplayer On");
+
   const [user, setUser] = useState(null);
 
   function updateGameState(challengeMode, challengeGame) {
@@ -39,9 +42,24 @@ export default function ToggleGameState({gameState, setGameState, challengeGame,
         setGameState(GAME_STATE.ENDED);
       setButtonText("Start a new game!");
     }
-    else if ( gameState === GAME_STATE.ENDED || gameState === GAME_STATE.IN_PROGRESS ) {
+    else if (gameState === GAME_STATE.IN_PROGRESS ) {
+      setGameState(GAME_STATE.ENDED);
+      setButtonText("Start a new game!");
+    }
+    else if ( gameState === GAME_STATE.ENDED) {
       setGameState(GAME_STATE.BEFORE);
       setButtonText("Start a new game!");
+    }
+
+  }
+  function toggleMultiPlayer(){
+    if(multiPlayerText === "Turn Multiplayer On" ){
+      setMultiPlayerText("Turn Multiplayer Off");
+      setMultiPlayer(MULTIPLAYER.ON);
+    }
+    else if(multiPlayerText === "Turn Multiplayer Off" ){
+      setMultiPlayerText("Turn Multiplayer On");
+      setMultiPlayer(MULTIPLAYER.OFF);
     }
 
   }
@@ -83,6 +101,9 @@ export default function ToggleGameState({gameState, setGameState, challengeGame,
       {user != null &&
         <p>Welcome, {user.displayName} ({user.email})</p>
       }
+      <Button onClick={() => toggleMultiPlayer()} >
+        {multiPlayerText}
+      </Button>
       <Button onClick={() => updateGameState(false)} >
         {buttonText}
       </Button>

@@ -1,7 +1,7 @@
 import React from 'react';
 import firebase from 'firebase';
 import 'firebase/firestore'
-
+/*
 export default function UploadImages(){
   // Create a root reference
   var storageRef = firebase.storage().ref();
@@ -21,3 +21,4 @@ export default function UploadImages(){
     console.log('Uploaded an array!');
   });
 }
+*/

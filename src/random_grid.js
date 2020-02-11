@@ -19,6 +19,5 @@ export function RandomGrid() {
       if (grid[row][col] === "Q") grid[row][col] = "Qu";
     }
   }
-  //console.log(grid);
   return grid;
 }

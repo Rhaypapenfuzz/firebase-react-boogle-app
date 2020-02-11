@@ -40,7 +40,6 @@ export function ChallengeGrids(){
         challengeGrid = [];
       }
     }
-    //console.log(allChallengeGrids);
 
   return allChallengeGrids;
 }

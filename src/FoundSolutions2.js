@@ -7,7 +7,7 @@ import {CHALLENGE_GAMES} from './challenge_games_enum.js';
 import ToggleGameState from './ToggleGameState.js';
 
 var key = [];
-function FoundSolutions({words, headerText}) {
+function FoundSolutions2({words, headerText}) {
   var allHighestScores =  HighestScores();
   //const [challengeGame, setChallengeGame] = useState(CHALLENGE_GAMES.GAME_1);
 
@@ -59,4 +59,4 @@ function FoundSolutions({words, headerText}) {
   );
 }
 
-export default FoundSolutions;
+export default FoundSolutions2;

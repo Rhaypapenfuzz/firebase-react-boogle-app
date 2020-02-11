@@ -3,7 +3,9 @@ import firebase from 'firebase';
 import findAllSolutions from './solver.js';
 import Board from './Board.js';
 import GuessInput from './GuessInput.js';
+import GuessInput2 from './GuessInput2.js';
 import FoundSolutions from './FoundSolutions.js';
+import FoundSolutions2 from './FoundSolutions2.js';
 import ToggleGameState from './ToggleGameState.js';
 import './App.css';
 import {GAME_STATE} from './game_state_enum.js';
@@ -12,7 +14,8 @@ import {RandomGrid} from './random_grid.js';
 import TextInput from './TextInput.js';
 import {ChallengeGrids} from './challengeGrids.js';
 import {HighestScores} from './HighestScores.js';
-//import UploadImages from './UploadImages.js';
+import {MULTIPLAYER} from './multiPlayer_enum.js';
+
 
 function App() {
   var allChallengeGrids =  ChallengeGrids();
@@ -23,7 +26,9 @@ function App() {
   const [grid, setGrid] = useState([]);
   const [allSolutions, setAllSolutions] = useState([]);
   const [foundSolutions, setFoundSolutions] = useState([]);
+  const [foundSolutions2, setFoundSolutions2] = useState([]);
   const [highestScoreText, setHighestScoreText] = useState("");
+  const [multiPlayer, setMultiPlayer] = useState(MULTIPLAYER.OFF);
 
   // useEffect will trigger when the array items in the second argument are
   // updated so whenever grid is updated, we will recompute the solutions
@@ -70,21 +75,28 @@ function App() {
       <ToggleGameState gameState={gameState}
                        setGameState={(state) => setGameState(state)}
                        challengeGame={challengeGame}
-                       setChallengeGame={(challengeGame) => setChallengeGame(challengeGame)} />
+                       setChallengeGame={(challengeGame) => setChallengeGame(challengeGame)}
+                       multiPlayer={multiPlayer}
+                       setMultiPlayer={(multiPlayer) => setMultiPlayer(multiPlayer)} />
 
-      { gameState === GAME_STATE.IN_PROGRESS &&
+      { (gameState === GAME_STATE.IN_PROGRESS || gameState === GAME_STATE.CHALLENGE_MODE) && multiPlayer === MULTIPLAYER.ON &&
         <div>
           <Board board={grid} />
+          <p align="left"> <b> Player 1:</b></p>
           <GuessInput allSolutions={allSolutions}
                       foundSolutions={foundSolutions}
                       correctAnswerCallback={(answer) => correctAnswerFound(answer)}/>
           <FoundSolutions headerText="Solutions you've found" words={foundSolutions} />
+          <p align="left"> <b> Player 2:</b></p>
+          <GuessInput2 allSolutions={allSolutions}
+                      foundSolutions2={foundSolutions2}
+                      correctAnswerCallback={(answer2) => correctAnswerFound(answer2)}/>
+          <FoundSolutions2 headerText="Solutions you've found" words={foundSolutions2} />
         </div>
       }
-      { gameState === GAME_STATE.CHALLENGE_MODE &&
+      { (gameState === GAME_STATE.IN_PROGRESS || gameState === GAME_STATE.CHALLENGE_MODE) &&   multiPlayer === MULTIPLAYER.OFF &&
         <div>
           <Board board={grid} />
-          <p> High Score: {highestScoreText}</p>
           <GuessInput allSolutions={allSolutions}
                       foundSolutions={foundSolutions}
                       correctAnswerCallback={(answer) => correctAnswerFound(answer)}/>
@@ -97,6 +109,7 @@ function App() {
           <FoundSolutions headerText="All possible solutions" words={allSolutions} />
         </div>
       }
+
     </div>
   );
 }
