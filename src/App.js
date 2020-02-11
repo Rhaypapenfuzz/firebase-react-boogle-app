@@ -20,14 +20,13 @@ import {MULTIPLAYER} from './multiPlayer_enum.js';
 function App() {
   var allChallengeGrids =  ChallengeGrids();
   var allHighestScores =  HighestScores();
-  //UploadImages();
   const [gameState, setGameState] = useState(GAME_STATE.BEFORE);
   const [challengeGame, setChallengeGame] = useState(CHALLENGE_GAMES.GAME_1);
   const [grid, setGrid] = useState([]);
   const [allSolutions, setAllSolutions] = useState([]);
   const [foundSolutions, setFoundSolutions] = useState([]);
   const [foundSolutions2, setFoundSolutions2] = useState([]);
-  const [highestScoreText, setHighestScoreText] = useState("");
+  const [highestScoreText, setHighestScoreText] = useState(0);
   const [multiPlayer, setMultiPlayer] = useState(MULTIPLAYER.OFF);
 
   // useEffect will trigger when the array items in the second argument are
@@ -81,6 +80,11 @@ function App() {
 
       { (gameState === GAME_STATE.IN_PROGRESS || gameState === GAME_STATE.CHALLENGE_MODE) && multiPlayer === MULTIPLAYER.ON &&
         <div>
+          { gameState === GAME_STATE.CHALLENGE_MODE &&
+            <div>
+              <p>  High Score: {highestScoreText} </p>
+            </div>
+          }
           <Board board={grid} />
           <p align="left"> <b> Player 1:</b></p>
           <GuessInput allSolutions={allSolutions}
@@ -96,6 +100,11 @@ function App() {
       }
       { (gameState === GAME_STATE.IN_PROGRESS || gameState === GAME_STATE.CHALLENGE_MODE) &&   multiPlayer === MULTIPLAYER.OFF &&
         <div>
+        { gameState === GAME_STATE.CHALLENGE_MODE &&
+          <div>
+          <p>  High Score: {highestScoreText} </p>
+          </div>
+        }
           <Board board={grid} />
           <GuessInput allSolutions={allSolutions}
                       foundSolutions={foundSolutions}
